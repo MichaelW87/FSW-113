@@ -22,18 +22,103 @@ const parts = [
 
 ]
 
-// list of each part number and qty for check-off in the "detailsList" element
+// list of each part number and qty for check-off in the "detailsList" element  "forEach"
+var detailsList = document.getElementById("detailsList");
+parts.forEach(
+    function (part) {
+        // console.log(part);
+        // console.log(detailsList)
+        // detailsList.textContent += " Part Number  " + part.partNbr + " Part Descr " + part.partDescr + " Part Qty " + part.qty
+        var newPart = document.createElement("div")
+        detailsList.append(newPart);
 
-// if parts requiring special handling exist (in aisle B3), list of items needing 
-// special packaging in the "specialPackaging" element, else remove element
+        var child = document.createElement("input")
+        newPart.append(child)
+        child.type = "checkbox"
 
-// if hazardous parts exist (in aisle J4), let employee know in the "hazardousMaterials"
-// element and remind them to get gloves, else remove element
 
-// if all items in the order are small parts (aisle H1), then let employee know that they should take 
-// a basket and go dirctly to aisle H1
+        var child = document.createElement("span")
+        child.textContent = " Part Number  " + part.partNbr
+        newPart.append(child);
+        // child.style.borderRight = "solid 2px black"
+        child.style.paddingRight = "10px "
 
-// if there are large items (anthing in aisles S, T, or U), then let the employee know in the "forkiftNeeded"
-// element that they will need to reserve a forklift, else remove the element
+        var child = document.createElement("span")
+        child.textContent = " Part Descr " + part.partDescr
+        newPart.append(child);
+        child.style.paddingRight = "10px "
+
+
+        var child = document.createElement("span")
+        child.textContent = " Part Qty " + part.qty
+        newPart.append(child);
+        child.style.paddingRight = "10px "
+
+
+    }
+
+)
+
+// If parts requiring special handling exist (in aisle B3), list of items needing special packaging in the "specialPackaging" element, else remove element
+
+var specialPackaging = document.getElementById("specialPackaging");
+parts.filter(
+    function (part) {
+        if (part.aisle === "B3") {
+            var newPart = document.createElement("div")
+            specialPackaging.append(newPart);
+            newPart.textContent = (part.partNbr);
+        }
+    }
+)
+
+// If hazardous parts exist (in aisle J4), let employee know in the "hazardousMaterials"  element and remind them to get gloves, else remove element.
+var hazardousMaterials = document.getElementById("hazardousMaterials");
+var part = parts.find((itemParts) => { return itemParts.aisle === "J4" })
+
+if (part) {
+    var newPart = document.createElement("div")
+    newPart.textContent = "Get gloves for hazardous Materials ";
+    hazardousMaterials.append(newPart);
+} else {
+    hazardousMaterials.remove()
+}
+
+
+
+// if all items in the order are small parts (aisle H1), then let employee know that they should take a basket and go dirctly to aisle H1
+var part = parts.every((itemParts) => { return itemParts.aisle === "H1" })
+var smallItemsOnly = document.getElementById("smallItemsOnly");
+
+if (part) {
+    var newPart = document.createElement("div")
+    newPart.textContent = " Take a basket and go dirctly to aisle H1";
+    smallItemsOnly.append(newPart);
+    // } else {
+    //     // smallItemsOnly.remove()
+}
+
+
+
+
+// if there are large items (anthing in aisles S, T, or U), then let the employee know in the "forkiftNeeded" element that they will need to reserve a forklift, else remove the element
+var part = parts.some((itemParts) => { return itemParts.aisle === "S" || itemParts.aisle === "T" || itemParts.aisle === "U" })
+var forkiftNeeded = document.getElementById("forkiftNeeded");
+
+if (part) {
+    var newPart = document.createElement("div")
+    newPart.textContent = " Will need to reserve a forklift ";
+    forkiftNeeded.append(newPart);
+} else {
+    forkiftNeeded.remove()
+}
+
 
 // sum up the total number of parts and append that number to the text already in "totalItems" element
+var part = parts.reduce((itemqty, itemParts) => { return itemParts.qty + itemqty }, 0)
+var totalItems = document.getElementById("totalItems");
+
+
+var newPart = document.createElement("div")
+newPart.textContent += part;
+totalItems.append(newPart);
