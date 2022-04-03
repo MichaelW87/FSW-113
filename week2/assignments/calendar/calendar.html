@@ -1,5 +1,6 @@
 <!-- Modify this page to use a select and an input to generate a calendar for any month and year -->
 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,8 +8,13 @@
         <link rel='stylesheet' href='calendar.css'>
     </head>
     <body>
+        
         <div class='calendarWrapper'>
             <div class='calendarTitle'></div>
+            <select id="select">
+            </select>
+            <input id="yearInput" type="text"></select>
+            <button id="button">Go</button>
             <div class='calendar' id='calendarDays'></div>
         </div>
     </body>
